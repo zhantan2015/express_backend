@@ -61,6 +61,9 @@ export default class ArticleService {
             }
             apiRuselt.success('获取所有文章成功！')
             apiRuselt.data = res
+
+            
+            redisClient.setEx('articleList', 3600, JSON.stringify(res))
         } catch (error) {
             apiRuselt.failed('出现错误！')
         } finally {
