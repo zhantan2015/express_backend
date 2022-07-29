@@ -9,6 +9,31 @@ export type ArticleInfo = {
     tags?: string[]
 }
 
+async function _getArticleList() {
+    let apiRuselt = new ApiRuselt()
+    let sql = `SELECT a.aid,a.title,a.content,a.create_date,ac.acname 
+                FROM articles a LEFT JOIN article_category ac
+                ON a.acid = ac.acid`
+    try {
+        let res = await sqlQuery(sql)
+        for (let i of res as any) {
+            let aid = i['aid']
+            let sql = `SELECT at.atname FROM article_tags at
+                        JOIN a_at ON a_at.aid = ? 
+                        AND a_at.atid = at.atid`
+            let tags: any[] = await sqlQuery(sql, [aid]) as any
+            i.tags = tags.map(i => Object.values(i)[0])
+        }
+        apiRuselt.success('获取所有文章成功！')
+        apiRuselt.data = res
+
+        redisClient.setEx('articleList', 3600, JSON.stringify(res))
+    } catch (error) {
+        apiRuselt.failed('出现错误！')
+    } finally {
+        return apiRuselt
+    }
+}
 export default class ArticleService {
 
 
@@ -37,6 +62,9 @@ export default class ArticleService {
                 }
             }
             apiResult.success('创建文章成功！')
+
+            // 这里更新一下缓存
+            _getArticleList()
         } catch (error) {
             apiResult.failed('发生错误！')
         } finally {
@@ -46,27 +74,12 @@ export default class ArticleService {
 
     static async getAllArticles() {
         let apiRuselt = new ApiRuselt()
-        let sql = `SELECT a.aid,a.title,a.content,a.create_date,ac.acname 
-                    FROM articles a LEFT JOIN article_category ac
-                    ON a.acid = ac.acid`
-        try {
-            let res = await sqlQuery(sql)
-            for (let i of res as any) {
-                let aid = i['aid']
-                let sql = `SELECT at.atname FROM article_tags at
-                            JOIN a_at ON a_at.aid = ? 
-                            AND a_at.atid = at.atid`
-                let tags: any[] = await sqlQuery(sql, [aid]) as any
-                i.tags = tags.map(i => Object.values(i)[0])
-            }
-            apiRuselt.success('获取所有文章成功！')
-            apiRuselt.data = res
 
-            
-            redisClient.setEx('articleList', 3600, JSON.stringify(res))
-        } catch (error) {
-            apiRuselt.failed('出现错误！')
-        } finally {
+        if (await redisClient.exists('articleList') == 1) {
+            return apiRuselt.success('获取文章列表成功！')
+                .setData(JSON.parse(await redisClient.get('articleList') as string))
+        } else {
+            apiRuselt = await _getArticleList()
             return apiRuselt
         }
     }
