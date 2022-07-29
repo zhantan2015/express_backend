@@ -33,4 +33,6 @@ router.use('/logs', logsRouter)
 router.use('/comment', commentRouter)
 router.use('/leave-message', leaveMessageRouter)
 
+router.use('/flush-cache', flushCacheRouter)
+
 export default router;
