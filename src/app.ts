@@ -1,15 +1,10 @@
-const [mode, secret, sqlhost, sqluser, sqlpassword, sqldatabase] = [...process.argv.splice(2)];
-export { mode, secret, sqlhost, sqluser, sqlpassword, sqldatabase }
 
 import express from 'express'
 import './models'
 import router from './router'
 
-console.log({ mode, secret })
-
 const app = express()
 const port = 3333
-
 
 
 app.use(bodyParser.urlencoded({ extended: true }))

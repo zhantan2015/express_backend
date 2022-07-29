@@ -1,7 +1,6 @@
-import { secret } from "../app"
 
 const config = {
-    SECRET_KEY: secret || 'jta9d2luuq'
+    SECRET_KEY: process.env['SECRET_KEY'] || 'jta9d2luuq'
 }
 
 type AuthenticationRouter = {
