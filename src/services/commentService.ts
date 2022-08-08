@@ -24,6 +24,9 @@ export default class CommentService {
     static async addComment(commentInfo: CommentInfo) {
         let apiResult = new ApiRuselt()
         let cid = createId()
+        if (!commentInfo['author'] || !commentInfo['content']) {
+            return apiResult.failed('带 * 的项目均为必填项！')
+        }
         let keys = Object.keys(commentInfo)
         let sql = `INSERT INTO comments(cid,${keys.join()})
         VALUES(?,${'?'.repeat(keys.length).split('').join()})`
