@@ -2,7 +2,6 @@ import { ApiRuselt, StatusCode } from "../common/apiResult"
 import { createId } from "../common/hash"
 import sqlQuery from "../common/sqlQuery"
 import redisClient from "../common/cache"
-import pool from "../models"
 
 export type ArticleInfo = {
     aid?: string,
@@ -86,8 +85,6 @@ export default class ArticleService {
         } finally {
             return apiResult
         }
-
-
     }
 
     static async getAllArticles() {
