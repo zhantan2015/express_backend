@@ -9,5 +9,6 @@ const router = express.Router()
 // })
 router.post('/', ArticleController.postArticle)
 router.get('/', ArticleController.getArticle)
-
+router.put('/:aid', ArticleController.putArticle)
+router.delete('/:aid', ArticleController.deleteArticle)
 export default router

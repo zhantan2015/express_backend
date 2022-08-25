@@ -1,11 +1,11 @@
 
 import express from 'express'
+import bodyParser from 'body-parser'
 import './models'
 import router from './router'
 
 const app = express()
-const port = 3333
-
+const port = 8888
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.all('*', (req, res, next) => {

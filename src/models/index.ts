@@ -1,8 +1,5 @@
 import mysql from 'mysql'
 
-import { mode, sqldatabase, sqlhost, sqlpassword, sqluser } from '../app';
-
-
 const SQLHOST = process.env['SQLHOST'] || 'localhost'
 const SQLUSER = process.env['SQLUSER'] || 'root'
 const SQLPASSWORD = process.env['SQLPASSWORD'] || 'root'
@@ -15,9 +12,6 @@ const sqlOpt = {
     database: SQLDB
 }
 
+const pool = mysql.createPool(sqlOpt)
 
-const connection = mysql.createConnection(sqlOpt);
-
-connection.connect()
-
-export default connection
+export default pool

@@ -10,4 +10,14 @@ export default class ArticleController {
         let apiResult = await ArticleService.addArticle(req.body)
         res.send(apiResult)
     }
+    static async putArticle(req: Request, res: Response) {
+        const aid = req.params['aid']
+        let apiResult = await ArticleService.updateArticle(aid, req.body)
+        res.send(apiResult)
+    }
+    static async deleteArticle(req: Request, res: Response) {
+        const aid = req.params['aid']
+        let apiResult = await ArticleService.deleteArticle(aid)
+        res.send(apiResult)
+    }
 }

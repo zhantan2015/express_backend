@@ -8,7 +8,7 @@ type AuthenticationRouter = {
 }
 
 export const AuthenticationRouter: AuthenticationRouter = {
-    "GET": ["/logs", "/category"],
+    "GET": ["/logs", "/category","/flush-cache"],
     "POST": ["/category", "/article"],
     "PUT": [],
     "DELETE": [],

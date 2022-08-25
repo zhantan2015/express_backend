@@ -9,6 +9,7 @@ import userRouter from './userRouter'
 import logsRouter from './logsRouter'
 import commentRouter from './commentRouter'
 import leaveMessageRouter from './leaveMessageRouter'
+import flushCacheRouter from './flushCacheRouter'
 
 export const routerInfo = {
     req: '' as any
@@ -32,7 +33,8 @@ router.use('/article', articleRouter)
 router.use('/logs', logsRouter)
 router.use('/comment', commentRouter)
 router.use('/leave-message', leaveMessageRouter)
-
 router.use('/flush-cache', flushCacheRouter)
+
+// router.use('/user', userRouter)
 
 export default router;

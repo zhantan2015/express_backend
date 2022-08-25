@@ -26,7 +26,6 @@ export class Auth {
         try {
             let sql = `SELECT * FROM users WHERE uname = ?`
             result = await sqlQuery(sql, [this.userinfo.username])
-            console.log(result)
             if (result.length == 0) {
                 return apiResult.failed('用户名或密码错误！')
             } else {

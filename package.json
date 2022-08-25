@@ -7,18 +7,21 @@
     "dev": "ts-node ./src/app.ts",
     "mon": "nodemon ./src/app.ts --watch ./src/**/*.ts",
     "build": "tsc",
-    "start":"pm2 start ./ecosystem.config.js"
+    "start": "pm2 start ./ecosystem.config.js",
+    "save": "pm2 save",
+    "reload": "pm2 reload express-app",
+    "stop": "pm2 stop express-app"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/mysql": "^2.15.21",
     "body-parser": "^1.20.0",
     "express": "^4.18.1",
     "global": "^4.4.0",
     "mysql": "^2.18.1",
-    "pm2": "^5.2.0"
+    "pm2": "^5.2.0",
+    "redis": "^4.2.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
